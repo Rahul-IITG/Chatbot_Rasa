@@ -1,0 +1,80 @@
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- saidname
+- said_yes
+- said_no
+- procurement
+entities:
+- name
+slots:
+  name:
+    type: text
+responses:
+  utter_greet:
+  - text: Hi, I am here to help you. Can I know your name
+  utter_sayname:
+  - text: 'Hi {name}. Please select the field where you need help:'
+    buttons:
+    - title: Procurement
+      payload: /procurement
+    - title: Human Resources
+      payload: /procurement
+    - title: Techinal Troubleshoot
+      payload: /procurement
+  utter_question_1:
+  - text: Does your question relates to spending MasterCard funds ?
+  utter_question_2:
+  - text: Are you looking to spend less than $5000 ?
+  utter_question_3:
+  - text: Do you know the supplier you'd like to work with ?
+  utter_question_4:
+  - text: Is it an existing supplier of MasterCard ?
+  utter_question_5:
+  - text: Do you have a clear description of services that you intend to buy ?
+  utter_question_6:
+  - text: Have you already discussed and agreeded the price with the supplier ?
+  utter_99:
+  - text: Output 99
+  utter_0:
+  - text: Output 0
+  utter_1:
+  - text: Output 1
+  utter_2:
+  - text: Output 2
+  utter_3:
+  - text: Output 3
+  utter_4:
+  - text: Output 4
+  utter_5:
+  - text: Output 5
+  utter_6:
+  - text: Output 6
+  utter_7:
+  - text: Output 7
+  utter_8:
+  - text: Output 8
+  utter_9:
+  - text: Output 9
+actions:
+- utter_sayname
+- utter_greet
+- utter_question_1
+- utter_question_2
+- utter_question_3
+- utter_question_4
+- utter_question_5
+- utter_question_6
+- utter_99
+- utter_0
+- utter_1
+- utter_2
+- utter_3
+- utter_4
+- utter_5
+- utter_6
+- utter_7
+- utter_8
+- utter_9
