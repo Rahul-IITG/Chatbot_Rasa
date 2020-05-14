@@ -3,12 +3,12 @@
 - hi there
 - hello
 
-## intent:saidname
-- I am [Ra](name)
-- This is [Ra](name)
-- [Ra](name)
-- My name is [Ra](name)
-- My name's [Ra](name)
+<!-- ## intent:saidname
+- I am [R](name)
+- This is [R](name)
+- [R](name)
+- My name is [R](name)
+- My name's [R](name)
 - I am [Sa](name)
 - This is [Sa](name)
 - [Sa](name)
@@ -20,7 +20,7 @@
 - [a-z]{5}
 - This is [a-z]{5}
 - I am [a-z]{5}
-- My name is [a-z]{5}
+- My name is [a-z]{5} -->
 
 
 ## intent:said_yes

@@ -7,21 +7,86 @@
 
 # This is a simple example for a custom action which utters "Hello World!"
 
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
+from typing import Any, Text, Dict, List, Union
+
+from rasa_sdk import Action, Tracker
+from rasa_sdk.events import SlotSet
+from rasa_sdk.executor import CollectingDispatcher
+
+class ActionSetAnswersNull(Action):
+	def name(self) -> Text:
+		return "action_set_answers_null"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		# SlotSet("answer1",value=None)
+		# SlotSet("answer2",value=None)
+		# SlotSet("answer3",value=None)
+		# SlotSet("answer4",value=None)
+		# SlotSet("answer5",value=None)
+		
+		return [SlotSet("answer6",value=None)]
+
+class ActionAnswer1Submit(Action):
+	def name(self) -> Text:
+		return "action_answer1_submit"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		return [SlotSet("answer1",tracker.latest_message['text'])]
+
+class ActionAnswer2Submit(Action):
+	def name(self) -> Text:
+		return "action_answer2_submit"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		return [SlotSet("answer2",tracker.latest_message['text'])]
+class ActionAnswer3Submit(Action):
+	def name(self) -> Text:
+		return "action_answer3_submit"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		return [SlotSet("answer3",tracker.latest_message['text'])]
+class ActionAnswer4Submit(Action):
+	def name(self) -> Text:
+		return "action_answer4_submit"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		return [SlotSet("answer4",tracker.latest_message['text'])]
+class ActionAnswer5Submit(Action):
+	def name(self) -> Text:
+		return "action_answer5_submit"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		return [SlotSet("answer5",tracker.latest_message['text'])]
+class ActionAnswer6Submit(Action):
+	def name(self) -> Text:
+		return "action_answer6_submit"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		return [SlotSet("answer6",tracker.latest_message['text'])]
+
+class ActionHelloWorld(Action):
+
+	def name(self) -> Text:
+		return "action_hello_world"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		Link="https://www.fb.com/"
+		dispatcher.utter_template("utter_99", Tracker, link=Link)
+
+		return []

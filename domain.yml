@@ -3,20 +3,37 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
 - greet
-- saidname
 - said_yes
 - said_no
 - procurement
+- saidname
 entities:
-- name
+- answer1
+- answer2
+- answer3
+- answer4
+- answer5
+- answer6
 slots:
-  name:
+  answer1:
     type: text
+  answer2:
+    type: text
+  answer3:
+    type: text
+  answer4:
+    type: text
+  answer5:
+    type: text
+  answer6:
+    type: text
+  name:
+    type: unfeaturized
 responses:
   utter_greet:
-  - text: Hi, I am here to help you. Can I know your name
+  - text: Hi, I am here to help you if you want any help in procurement.
   utter_sayname:
-  - text: 'Hi {name}. Please select the field where you need help:'
+  - text: 'Hi . Please select the field where you need help:'
     buttons:
     - title: Procurement
       payload: /procurement
@@ -37,7 +54,7 @@ responses:
   utter_question_6:
   - text: Have you already discussed and agreeded the price with the supplier ?
   utter_99:
-  - text: Output 99
+  - text: Output 99 [ ]{link}
   utter_0:
   - text: Output 0
   utter_1:
@@ -78,3 +95,11 @@ actions:
 - utter_7
 - utter_8
 - utter_9
+- action_hello_world
+- action_answer1_submit
+- action_answer2_submit
+- action_answer3_submit
+- action_answer4_submit
+- action_answer5_submit
+- action_answe6_submit
+- action_answer6_submit
