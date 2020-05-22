@@ -3,37 +3,74 @@ session_config:
   carry_over_slots_to_new_session: true
 intents:
 - greet
-- saidname
 - said_yes
 - said_no
 - procurement
+- saidname
+- notspend_funds
+- spend_funds
+- more_5000
+- less_5000
+- know_supplier
+- dont_know_supplier
+- supplierofmc
+- not_supplierofmc
+- discussed_price
+- notdiscussed_price
+- out_of_scope
 entities:
+- answer1
+- answer2
+- answer3
+- answer4
+- answer5
+- answer6
 - name
 slots:
+  answer1:
+    type: text
+  answer2:
+    type: text
+  answer3:
+    type: text
+  answer4:
+    type: text
+  answer5:
+    type: text
+  answer6:
+    type: text
   name:
+    type: text
+  output:
     type: text
 responses:
   utter_greet:
-  - text: Hi, I am here to help you. Can I know your name
-  utter_sayname:
-  - text: 'Hi {name}. Please select the field where you need help:'
-    buttons:
-    - title: Procurement
-      payload: /procurement
-    - title: Human Resources
-      payload: /procurement
-    - title: Techinal Troubleshoot
-      payload: /procurement
+  - text: Hi Buzz, my name's Woody
+  utter_howhelp:
+  - text: How can I help you ?
+  utter_confirm_99:
+  - text: So you are not going to spend MasterCard funds ?
   utter_question_1:
-  - text: Does your question relates to spending MasterCard funds ?
+  - text: Are you going to spend MasterCard funds ?
   utter_question_2:
   - text: Are you looking to spend less than $5000 ?
+    buttons:
+    - title: YES
+      payload: /less_5000
+    - title: NO
+      payload: /more_5000
   utter_question_3:
-  - text: Do you know the supplier you'd like to work with ?
+  - text: Let's start with the supplier. Do you know the supplier you'd like to work
+      with ?
   utter_question_4:
   - text: Is it an existing supplier of MasterCard ?
   utter_question_5:
   - text: Do you have a clear description of services that you intend to buy ?
+    buttons:
+    - title: YES
+      payload: /said_yes
+    - title: NO
+      payload: /said_no
   utter_question_6:
   - text: Have you already discussed and agreeded the price with the supplier ?
   utter_99:
@@ -41,7 +78,8 @@ responses:
   utter_0:
   - text: Output 0
   utter_1:
-  - text: Output 1
+  - text: 'Support which you will be needed: Evaluate Supplier Following link will
+      provide the mentioned support: https://www.dpss.co.uk/how-do-you-evaluate-a-supplier-use-ray-carters-10c-model-of-course/'
   utter_2:
   - text: Output 2
   utter_3:
@@ -59,7 +97,8 @@ responses:
   utter_9:
   - text: Output 9
 actions:
-- utter_sayname
+- utter_howhelp
+- utter_confirm_99
 - utter_greet
 - utter_question_1
 - utter_question_2
@@ -78,3 +117,15 @@ actions:
 - utter_7
 - utter_8
 - utter_9
+- action_hello_world
+- action_answer1_submit
+- action_answer2_submit
+- action_answer3_submit
+- action_answer4_submit
+- action_answer5_submit
+- action_answe6_submit
+- action_answer6_submit
+- action_set_answers_null
+- action_database
+- -->
+- custom_fallback_action
