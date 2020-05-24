@@ -10,8 +10,56 @@
 from typing import Any, Text, Dict, List, Union
 
 from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, SessionStarted, ActionExecuted, EventType
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import UserUtteranceReverted
+
+
+class ActionCustomFallback(Action):
+	def name(self) -> Text:
+		return "custom_fallback_action"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		dispatcher.utter_message("Please contact the support team")
+		
+		return [UserUtteranceReverted()]
+
+
+
+class ActionSessionStart(Action):
+    def name(self) -> Text:
+        return "action_session_start"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[EventType]:
+
+        # the session should begin with a `session_started` event
+        dispatcher.utter_message("Hi Varrik, I'm Zhu Lee.")
+        events = [SessionStarted()]
+        
+        # any slots that should be carried over should come after the
+        # `session_started` event
+        # an `action_listen` should be added at the end as a user message follows
+        events.append(ActionExecuted("action_listen"))
+
+        return events
+# class ActionCustomFallback(Action):
+# 	def name(self) -> Text:
+# 		return "action_default_ask_affirmation"
+
+# 	def run(self, dispatcher: CollectingDispatcher,
+# 			tracker: Tracker,
+# 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+# 		dispatcher.utter_message("Can you please rephrase it. i did not understand clearly")
+		
+# 		return [UserUtteranceReverted()]
 
 class ActionSetAnswersNull(Action):
 	def name(self) -> Text:
@@ -27,6 +75,129 @@ class ActionSetAnswersNull(Action):
 		# SlotSet("answer5",value=None)
 		
 		return [SlotSet("answer6",value=None)]
+
+class ActionSetAnswer1yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer1_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer1",True)]
+
+class ActionSetAnswer1no(Action):
+	def name(self) -> Text:
+		return "action_set_answer1_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer1",False)]
+
+class ActionSetAnswer2yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer2_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer2",True)]
+
+class ActionSetAnswer2no(Action):
+	def name(self) -> Text:
+		return "action_set_answer2_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer2",False)]
+
+class ActionSetAnswer3yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer3_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer3",True)]
+
+class ActionSetAnswer3no(Action):
+	def name(self) -> Text:
+		return "action_set_answer3_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer3",False)]
+
+class ActionSetAnswer4yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer4_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer4",True)]
+
+class ActionSetAnswer4no(Action):
+	def name(self) -> Text:
+		return "action_set_answer4_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer4",False)]
+
+class ActionSetAnswer5yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer5_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer5",True)]
+
+class ActionSetAnswer5no(Action):
+	def name(self) -> Text:
+		return "action_set_answer5_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer5",False)]
+
+
+class ActionSetAnswer6yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer6_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer6",True)]
+
+class ActionSetAnswer6no(Action):
+	def name(self) -> Text:
+		return "action_set_answer6_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer6",False)]
+
+
 
 class ActionAnswer1Submit(Action):
 	def name(self) -> Text:

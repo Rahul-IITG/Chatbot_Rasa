@@ -2,11 +2,29 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+- start
 - greet
 - said_yes
 - said_no
 - procurement
-- saidname
+- notspend_funds
+- spend_funds
+- more_5000
+- less_5000
+- know_supplier
+- dont_know_supplier
+- supplierofmc
+- not_supplierofmc
+- discussed_price
+- notdiscussed_price
+- out_of_scope
+- already_bought
+- know_sourcing_rep
+- dont_know_sourcing_rep
+- freetext
+- no_knowledge
+- not_clear_description
+- clear_description
 entities:
 - answer1
 - answer2
@@ -14,6 +32,7 @@ entities:
 - answer4
 - answer5
 - answer6
+- name
 slots:
   answer1:
     type: text
@@ -28,33 +47,40 @@ slots:
   answer6:
     type: text
   name:
-    type: unfeaturized
+    type: text
 responses:
   utter_greet:
-  - text: Hi, I am here to help you if you want any help in procurement.
-  utter_sayname:
-  - text: 'Hi . Please select the field where you need help:'
-    buttons:
-    - title: Procurement
-      payload: /procurement
-    - title: Human Resources
-      payload: /procurement
-    - title: Techinal Troubleshoot
-      payload: /procurement
+  - text: Hi Buzz, my name's Woody
+  utter_howhelp:
+  - text: Hi. How can I help you ?
+  utter_confirm_99:
+  - text: So you are not going to spend MasterCard funds ?
   utter_question_1:
-  - text: Does your question relates to spending MasterCard funds ?
+  - text: Are you going to spend MasterCard funds ?
   utter_question_2:
   - text: Are you looking to spend less than $5000 ?
+    buttons:
+    - title: YES
+      payload: /less_5000
+    - title: NO
+      payload: /more_5000
   utter_question_3:
-  - text: Do you know the supplier you'd like to work with ?
+  - text: Let's start with the supplier. Do you know the supplier you'd like to work
+      with ?
   utter_question_4:
   - text: Is it an existing supplier of MasterCard ?
   utter_question_5:
-  - text: Do you have a clear description of services that you intend to buy ?
+  - text: Hey now regarding this engagement.Do you have a clear description of products/services
+      that you intend to buy List of deliverables,timings + SLAs/KPIs for the performance?
+    buttons:
+    - title: YES
+      payload: /said_yes
+    - title: NO
+      payload: /said_no
   utter_question_6:
   - text: Have you already discussed and agreeded the price with the supplier ?
   utter_99:
-  - text: Output 99 [ ]{link}
+  - text: Output 99
   utter_0:
   - text: Output 0
   utter_1:
@@ -75,8 +101,103 @@ responses:
   - text: Output 8
   utter_9:
   - text: Output 9
+  utter_help_supplier_selection:
+  - text: were happy to help you select your supplier. Do you happen to know any potential
+      suppliers we could source from?
+  utter_provide_supplier:
+  - text: may you want to invite suppliers to evaluation-selection step.please [rovide
+      the suppliers name so that we can invite them.
+  utter_ask_affirmation:
+  - text: Did you mean
+  utter_ask_rephrase:
+  - text: Sorry I didn't understand, please rephrase again
+  utter_list_questions1_1:
+  - text: do you have clear idea of the products and services?
+  utter_list_questions1_2:
+  - text: do you know the performance quality yoou expect from the provider?
+  utter_triage:
+  - text: redirecting to triage tool.
+  utter_coupa:
+  - text: redirecting to coupa
+  utter_assess_other_supplier:
+  - text: ok so youve already selected the supplier. Would you be open to assess other
+      supplier's proposal?
+  utter_list_question2_1:
+  - text: do you alrady know the sourcing person you want to work with? or you need
+      help in finding the supplier.
+  utter_ask_sourcing_rep:
+  - text: please let us know the sourcing rep you want to work with. we will let him/her
+      know.
+  utter_list_question3_1:
+  - text: ok. thanks to provide the rationale in your choosing the supplier and the
+      price negotiation.
+  utter_list_question3_2:
+  - text: do you alrady know the sourcing person you want to work with? or you need
+      help in finding the supplier.
+  utter_list_question9_1:
+  - text: ok before going ahead.have you worked with a sourcing manager on this engagement?
+  utter_list_question9_2:
+  - text: fantastic! can you let us know who youve worked with?
+  utter_list_question4_1:
+  - text: read the following questions and answer no if your answer to all of the
+      questions is no. If you are not sure or answrer to atleast one of the question
+      is yes. then select not sure or yes.
+  utter_list_question4_2:
+  - text: does your supplier have access to mastercard and/or customer's sensitive
+      data
+  utter_list_question4_3:
+  - text: does your supplier have access to EU data?
+  utter_list_question4_4:
+  - text: does your supplier have access to mastercard systems?
+  utter_list_question4_5:
+  - text: is the supplier a state owned entity?
+  utter_list_question4_6:
+  - text: does the supplier work with a covered government entity?
+    buttons:
+    - title: YES
+      payload: /said_yes
+    - title: MAYBE
+      payload: /said_yes
+    - title: NO
+      payload: /said_no
+  utter_list_question8_1:
+  - text: read the following questions and answer no if your answer to all of the
+      questions is no. If you are not sure or answrer to any one of the question is
+      yes. then select yes
+  utter_list_question8_2:
+  - text: does your supplier have access to mastercard and/or customer's sensitive
+      data
+  utter_list_question8_3:
+  - text: does your supplier have access to EU data?
+  utter_list_question8_4:
+  - text: does your supplier have access to mastercard systems?
+  utter_list_question8_5:
+  - text: is the supplier a state owned entity?
+  utter_list_question8_6:
+  - text: does the supplier work with a covered government entity?
+    buttons:
+    - title: YES
+      payload: /said_yes
+    - title: NO
+      payload: /said_no
+  utter_explain_page1:
+  - text: redirecting to page which explains stakejholder thst TPRM involvement is
+      neededto perform due diligance + creating ticket for TRPM
+  utter_confirmation:
+  - text: is it correct?
+    buttons:
+    - title: YES
+      payload: /said_yes
+    - title: NO
+      payload: /said_no
+  utter_wrong:
+  - text: seems like we made a mistake somewhere. please follow this link to go and
+      talk to the procurement team.
 actions:
-- utter_sayname
+- utter_wrong
+- utter_confirmation
+- utter_howhelp
+- utter_confirm_99
 - utter_greet
 - utter_question_1
 - utter_question_2
@@ -95,11 +216,33 @@ actions:
 - utter_7
 - utter_8
 - utter_9
-- action_hello_world
-- action_answer1_submit
-- action_answer2_submit
-- action_answer3_submit
-- action_answer4_submit
-- action_answer5_submit
-- action_answe6_submit
-- action_answer6_submit
+- utter_ask_affirmation
+- utter_ask_rephrase
+- utter_help_supplier_selection
+- utter_provide_supplier
+- utter_list_questions1_1
+- utter_list_questions1_2
+- utter_list_question2_1
+- utter_triage
+- utter_coupa
+- utter_assess_other_supplier
+- utter_ask_sourcing_rep
+- utter_list_question3_1
+- utter_list_question3_2
+- utter_list_question4_1
+- utter_list_question4_2
+- utter_list_question4_3
+- utter_list_question4_4
+- utter_list_question4_5
+- utter_list_question4_6
+- utter_list_question8_1
+- utter_list_question8_2
+- utter_list_question8_3
+- utter_list_question8_4
+- utter_list_question8_5
+- utter_list_question8_6
+- utter_explain_page1
+- utter_list_question9_1
+- utter_list_question9_2
+- custom_fallback_action
+- action_session_start
