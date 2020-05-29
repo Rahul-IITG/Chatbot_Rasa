@@ -2,22 +2,28 @@ session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 intents:
+- start
 - greet
-- said_yes
-- said_no
-- procurement
-- saidname
-- notspend_funds
+- yes
+- no
+- help_in_procurement
+- not_spend_funds
 - spend_funds
-- more_5000
-- less_5000
+- more_than_$5000
+- less_than_$5000
 - know_supplier
 - dont_know_supplier
-- supplierofmc
-- not_supplierofmc
-- discussed_price
-- notdiscussed_price
+- supplier_of_mastercard
+- not_supplier_of_mastercard
+- discussed_price_with_supplier
+- not_discussed_price_with_supplier
 - out_of_scope
+- know_sourcing_person
+- dont_know_sourcing_person
+- freetext
+- no_knowledge
+- not_clear_description
+- clear_description
 entities:
 - answer1
 - answer2
@@ -41,8 +47,6 @@ slots:
     type: text
   name:
     type: text
-  output:
-    type: text
 responses:
   utter_greet:
   - text: Hi Buzz, my name's Woody
@@ -56,47 +60,151 @@ responses:
   - text: Are you looking to spend less than $5000 ?
     buttons:
     - title: YES
-      payload: /less_5000
+      payload: /less_than_$5000
     - title: NO
-      payload: /more_5000
+      payload: /more_than_$5000
   utter_question_3:
   - text: Let's start with the supplier. Do you know the supplier you'd like to work
       with ?
   utter_question_4:
   - text: Is it an existing supplier of MasterCard ?
   utter_question_5:
-  - text: Do you have a clear description of services that you intend to buy ?
+  - text: Now regarding this engagement. Do you have a clear description of products/services
+      that you intend to buy and the list of deliverables,timings + SLAs/KPIs for the performance?.
+      If you have any dounts regarding the terms SLA/KPI, please follow the below link https://procurement.mastercard.com/
     buttons:
     - title: YES
-      payload: /said_yes
+      payload: /yes
     - title: NO
-      payload: /said_no
+      payload: /no
   utter_question_6:
-  - text: Have you already discussed and agreeded the price with the supplier ?
+  - text: Have you already discussed/agreeded the price with the supplier ?
   utter_99:
-  - text: Output 99
+  - text: 'Using the following link you can sort out your queries https://procurement.mastercard.com/'
   utter_0:
-  - text: Output 0
+  - text: 'The following link explains how to use P-Cards for engagements less than $5000
+           https://www.spps.org/Page/31210'
   utter_1:
-  - text: 'Support which you will be needed: Evaluate Supplier Following link will
-      provide the mentioned support: https://www.dpss.co.uk/how-do-you-evaluate-a-supplier-use-ray-carters-10c-model-of-course/'
+  - text: 'The required supports : Evaluating Supplier'
   utter_2:
-  - text: Output 2
+  - text: 'The required supports : Supplier Onboarding, SOW Support, Price Negotiation'
   utter_3:
-  - text: Output 3
+  - text: 'The required supports : Supplier Onboarding, SOW Support, Price Discussion'
   utter_4:
-  - text: Output 4
+  - text: 'The required supports : Supplier Onboarding, Price Negotiation'
   utter_5:
-  - text: Output 5
+  - text: 'The required supports : Supplier Onboarding, Price Discussion'
   utter_6:
-  - text: Output 6
+  - text: 'The required supports : SOW Support, Price Negotiation, Supplier Selection'
   utter_7:
-  - text: Output 7
+  - text: 'The required supports : SOW Support, Supplier Selection, Price Discussion'
   utter_8:
-  - text: Output 8
+  - text: 'The required supports : Supplier Selection, Price Negotiation'
   utter_9:
-  - text: Output 9
+  - text: 'The required supports : Supplier Selection, Price Discussion'
+  utter_help_supplier_selection:
+  - text: We are happy to help you select your supplier. Do you happen to know any
+      potential suppliers we could source from?
+  utter_provide_supplier:
+  - text: May you want to invite suppliers to evaluation-selection step. Please provide
+      the suppliers name so that we can invite them.
+  utter_ask_affirmation:
+  - text: Did you mean
+  utter_ask_rephrase:
+  - text: Sorry I didn't understand, please rephrase again
+  utter_list_questions1_1:
+  - text: Do you have clear idea of the products and services?
+  utter_list_questions1_2:
+  - text: Do you know the performance quality yoou expect from the provider?
+  utter_triage:
+  - text: Redirecting to Triage tool.
+  utter_coupa:
+  - text: Redirecting to Coupa https://www.coupa.com/products/supplier-management/
+  utter_assess_other_supplier:
+  - text: Ok so you have already selected the supplier. Would you be open to assess
+      other supplier's proposal?
+    buttons:
+      - title: YES
+        payload: /yes
+      - title: NO
+        payload: /no
+  utter_list_question2_1:
+  - text: Do you already know the sourcing person you want to work with? or you need
+      help in finding the supplier
+  utter_ask_sourcing_rep:
+  - text: Please let us know the sourcing rep you want to work with. we will let him/her
+      know.
+  utter_list_question3_1:
+  - text: Ok. Thanks to provide the rationale in your choosing the supplier and the
+      price negotiation.
+  utter_list_question3_2:
+  - text: Do you already know the sourcing person you want to work with? or you need
+      help in finding the supplier.
+  utter_list_question9_1:
+  - text: Ok before going ahead. Have you worked with a sourcing manager on this engagement?
+  utter_list_question9_2:
+  - text: Fantastic! can you let us know who you have worked with?
+  utter_list_question4_1:
+  - text: Read the following questions and answer no if your answer to all of the
+      questions is no. If you are not sure or answrer to atleast one of the question
+      is yes. then select not sure or yes. If you have any queries, following link explains
+      everything you need to know https://procurement.mastercard.com/information_suppliers.html
+  utter_list_question4_2:
+  - text: Does your supplier have access to mastercard and/or customer's sensitive
+      data
+  utter_list_question4_3:
+  - text: Does your supplier have access to EU data?
+  utter_list_question4_4:
+  - text: Does your supplier have access to mastercard systems?
+  utter_list_question4_5:
+  - text: Is the supplier a state owned entity?
+  utter_list_question4_6:
+  - text: Does the supplier work with a covered government entity?
+    buttons:
+    - title: YES
+      payload: /yes
+    - title: MAYBE
+      payload: /yes
+    - title: NO
+      payload: /no
+  utter_list_question8_1:
+  - text: Read the following questions and answer no if your answer to all of the
+      questions is no. If you are not sure or answrer to any one of the question is
+      yes. then select yes. If you have any queries, below link explains everything
+      you need to know https://procurement.mastercard.com/information_suppliers.html
+  utter_list_question8_2:
+  - text: Does your supplier have access to Mastercard and/or customer's sensitive
+      data
+  utter_list_question8_3:
+  - text: Does your supplier have access to EU data?
+  utter_list_question8_4:
+  - text: Does your supplier have access to Mastercard systems?
+  utter_list_question8_5:
+  - text: Is the supplier a state owned entity?
+  utter_list_question8_6:
+  - text: Does the supplier work with a covered government entity?
+    buttons:
+    - title: YES
+      payload: /yes
+    - title: NO
+      payload: /no
+  utter_explain_page1:
+  - text: Redirecting to page which explains stakeholder that TPRM involvement is
+      needed to perform due diligance + creating ticket for TRPM
+     https://procurement.mastercard.com/docs/Mastercard_TPRM_Security_Requirements_(May_2020).pdf
+  utter_confirmation:
+  - text: Is it correct?
+    buttons:
+    - title: YES
+      payload: /yes
+    - title: NO
+      payload: /no
+  utter_wrong:
+  - text: Seems like we made a mistake somewhere. Please follow this link to go and
+      talk to the procurement team https://www.mastercard.us/en-us/personal/get-support.html
 actions:
+- utter_wrong
+- utter_confirmation
 - utter_howhelp
 - utter_confirm_99
 - utter_greet
@@ -117,15 +225,33 @@ actions:
 - utter_7
 - utter_8
 - utter_9
-- action_hello_world
-- action_answer1_submit
-- action_answer2_submit
-- action_answer3_submit
-- action_answer4_submit
-- action_answer5_submit
-- action_answe6_submit
-- action_answer6_submit
-- action_set_answers_null
-- action_database
-- -->
+- utter_ask_affirmation
+- utter_ask_rephrase
+- utter_help_supplier_selection
+- utter_provide_supplier
+- utter_list_questions1_1
+- utter_list_questions1_2
+- utter_list_question2_1
+- utter_triage
+- utter_coupa
+- utter_assess_other_supplier
+- utter_ask_sourcing_rep
+- utter_list_question3_1
+- utter_list_question3_2
+- utter_list_question4_1
+- utter_list_question4_2
+- utter_list_question4_3
+- utter_list_question4_4
+- utter_list_question4_5
+- utter_list_question4_6
+- utter_list_question8_1
+- utter_list_question8_2
+- utter_list_question8_3
+- utter_list_question8_4
+- utter_list_question8_5
+- utter_list_question8_6
+- utter_explain_page1
+- utter_list_question9_1
+- utter_list_question9_2
 - custom_fallback_action
+- action_session_start

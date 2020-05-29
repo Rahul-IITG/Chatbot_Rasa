@@ -10,10 +10,57 @@
 from typing import Any, Text, Dict, List, Union
 
 from rasa_sdk import Action, Tracker
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, SessionStarted, ActionExecuted, EventType
 from rasa_sdk.executor import CollectingDispatcher
-from database_api import DatabaseAPI
 from rasa_sdk.events import UserUtteranceReverted
+from database_api import DatabaseAPI
+
+
+class ActionCustomFallback(Action):
+	def name(self) -> Text:
+		return "custom_fallback_action"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		dispatcher.utter_message("So sorry, I am unable to understand what you said, please contact the support team using the mentioned link for further assistantance. Link: https://procurement.mastercard.com")
+		
+		return [UserUtteranceReverted()]
+
+
+
+class ActionSessionStart(Action):
+    def name(self) -> Text:
+        return "action_session_start"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[EventType]:
+
+        # the session should begin with a `session_started` event
+        dispatcher.utter_message("Hi Varrick, I'm Zhu Lee.")
+        events = [SessionStarted()]
+        
+        # any slots that should be carried over should come after the
+        # `session_started` event
+        # an `action_listen` should be added at the end as a user message follows
+        events.append(ActionExecuted("action_listen"))
+
+        return events
+# class ActionCustomFallback(Action):
+# 	def name(self) -> Text:
+# 		return "action_default_ask_affirmation"
+
+# 	def run(self, dispatcher: CollectingDispatcher,
+# 			tracker: Tracker,
+# 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+# 		dispatcher.utter_message("Can you please rephrase it. i did not understand clearly")
+		
+# 		return [UserUtteranceReverted()]
 
 class ActionSetAnswersNull(Action):
 	def name(self) -> Text:
@@ -29,6 +76,128 @@ class ActionSetAnswersNull(Action):
 		# SlotSet("answer5",value=None)
 		
 		return [SlotSet("answer6",value=None)]
+
+class ActionSetAnswer1yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer1_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer1",True)]
+
+class ActionSetAnswer1no(Action):
+	def name(self) -> Text:
+		return "action_set_answer1_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer1",False)]
+
+class ActionSetAnswer2yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer2_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer2",True)]
+
+class ActionSetAnswer2no(Action):
+	def name(self) -> Text:
+		return "action_set_answer2_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer2",False)]
+
+class ActionSetAnswer3yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer3_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer3",True)]
+
+class ActionSetAnswer3no(Action):
+	def name(self) -> Text:
+		return "action_set_answer3_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer3",False)]
+
+class ActionSetAnswer4yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer4_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer4",True)]
+
+class ActionSetAnswer4no(Action):
+	def name(self) -> Text:
+		return "action_set_answer4_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer4",False)]
+
+class ActionSetAnswer5yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer5_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer5",True)]
+
+class ActionSetAnswer5no(Action):
+	def name(self) -> Text:
+		return "action_set_answer5_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer5",False)]
+
+
+class ActionSetAnswer6yes(Action):
+	def name(self) -> Text:
+		return "action_set_answer6_yes"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer6",True)]
+
+class ActionSetAnswer6no(Action):
+	def name(self) -> Text:
+		return "action_set_answer6_no"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		
+		return [SlotSet("answer6",False)]
+
 
 class ActionAnswer1Submit(Action):
 	def name(self) -> Text:
@@ -47,6 +216,7 @@ class ActionAnswer2Submit(Action):
 			tracker: Tracker,
 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		return [SlotSet("answer2",tracker.latest_message['text'])]
+
 class ActionAnswer3Submit(Action):
 	def name(self) -> Text:
 		return "action_answer3_submit"
@@ -55,6 +225,7 @@ class ActionAnswer3Submit(Action):
 			tracker: Tracker,
 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		return [SlotSet("answer3",tracker.latest_message['text'])]
+
 class ActionAnswer4Submit(Action):
 	def name(self) -> Text:
 		return "action_answer4_submit"
@@ -63,6 +234,7 @@ class ActionAnswer4Submit(Action):
 			tracker: Tracker,
 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		return [SlotSet("answer4",tracker.latest_message['text'])]
+
 class ActionAnswer5Submit(Action):
 	def name(self) -> Text:
 		return "action_answer5_submit"
@@ -71,6 +243,7 @@ class ActionAnswer5Submit(Action):
 			tracker: Tracker,
 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		return [SlotSet("answer5",tracker.latest_message['text'])]
+
 class ActionAnswer6Submit(Action):
 	def name(self) -> Text:
 		return "action_answer6_submit"
@@ -93,32 +266,52 @@ class ActionHelloWorld(Action):
 
 		return []
 
-class ActionDatabase(Action):
+class ActionDatabase99(Action):
 
 	def name(self) -> Text:
-		return "action_database"
+		return "action_database_99"
 
 	def run(self, dispatcher: CollectingDispatcher,
 			tracker: Tracker,
 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 		e_id="exxxxxx"
-		user_name="Buzz"
-		output=tracker.get_slot('output')
+		output="99"
+		user_name="Varrik"
 
-		dispatcher.utter_message("This is {}".format(output))
-		#DatabaseAPI(e_id,user_name,output)***
+		DatabaseAPI(e_id,user_name,output)
 
 		return []
 
-class ActionCustomFallback(Action):
+
+class ActionDatabase0(Action):
 
 	def name(self) -> Text:
-		return "custom_fallback_action"
+		return "action_database_0"
 
 	def run(self, dispatcher: CollectingDispatcher,
 			tracker: Tracker,
 			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		e_id = "exxxxxx"
+		output = "0"
+		user_name = "Varrik"
 
-		dispatcher.utter_message("This is custom fallback")
+		DatabaseAPI(e_id, user_name, output)
 
-		return [UserUtteranceReverted()]
+		return []
+
+
+class ActionDatabase1(Action):
+
+	def name(self) -> Text:
+		return "action_database_1"
+
+	def run(self, dispatcher: CollectingDispatcher,
+			tracker: Tracker,
+			domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+		e_id = "exxxxxx"
+		output = "1"
+		user_name = "Varrik"
+
+		DatabaseAPI(e_id, user_name, output)
+
+		return []

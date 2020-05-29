@@ -19,6 +19,7 @@ def DatabaseAPI(e_id, user_name, output):
     statement=ibm_db.exec_immediate(connection,query)
 
     ibm_db.close(connection)
+    return
 
 if __name__=="__main__":
     DatabaseAPI('exxxxxx','rahul','5')
